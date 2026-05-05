@@ -171,7 +171,7 @@ No install step. No build step. Just open it in a browser.
 1. Push `index.html` to your repo
 2. Go to **Settings → Pages**
 3. Set source to `main` branch, `/ (root)`
-4. Your site will be live at `https://COOLXPLO.github.io/Personal-Portfolio/`
+4. Your site will be live at `https://i7540020.vercel.app/`
 
 ---
 
