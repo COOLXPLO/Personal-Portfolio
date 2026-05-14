@@ -11,7 +11,7 @@
 
 *"The quieter you become, the more you are able to hear."*
 
-**[→ Live Site](https://coolxplo.github.io/Personal-Portfolio/)**
+**[→ Live Site](https://i7540020.vercel.app/)**
 
 </div>
 
