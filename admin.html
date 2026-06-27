@@ -1,0 +1,352 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="robots" content="noindex, nofollow" />
+<title>Mainframe — Admin Console</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700;800&family=Orbitron:wght@700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+<style>
+  :root{
+    --bg:#05070a;
+    --bg2:#0a0e14;
+    --panel:#0d1119;
+    --grid:rgba(0,255,157,.05);
+    --g:#00ff9d;
+    --g-dim:#0a8a5c;
+    --red:#ff3b5c;
+    --cyan:#5ec8ff;
+    --amber:#ffb454;
+    --text:#d6e8de;
+    --dim:rgba(214,232,222,.45);
+    --border:rgba(0,255,157,.18);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{min-height:100vh}
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:'JetBrains Mono',monospace;
+    min-height:100vh;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    padding:1.5rem 1.1rem;
+    position:relative;
+    overflow-x:hidden;
+  }
+
+  body::before{
+    content:'';
+    position:fixed; inset:0;
+    background:
+      radial-gradient(ellipse 60% 40% at 18% 12%, rgba(0,255,157,.07), transparent 60%),
+      radial-gradient(ellipse 50% 35% at 85% 88%, rgba(94,200,255,.05), transparent 60%),
+      repeating-linear-gradient(0deg, var(--grid) 0px, var(--grid) 1px, transparent 1px, transparent 24px),
+      repeating-linear-gradient(90deg, var(--grid) 0px, var(--grid) 1px, transparent 1px, transparent 24px);
+    pointer-events:none;
+    z-index:0;
+  }
+  body::after{
+    content:'';
+    position:fixed; inset:0;
+    background:repeating-linear-gradient(0deg, rgba(255,255,255,.025) 0px, rgba(255,255,255,.025) 1px, transparent 1px, transparent 3px);
+    pointer-events:none;
+    mix-blend-mode:overlay;
+    opacity:.5;
+    z-index:1;
+    animation:scan 9s linear infinite;
+  }
+  @keyframes scan{0%{transform:translateY(0)}100%{transform:translateY(48px)}}
+
+  .stage{position:relative; z-index:2; width:100%; max-width:440px; display:flex; flex-direction:column; align-items:center;}
+
+  .termbar{
+    width:100%;
+    background:#0c1016;
+    border:1px solid var(--border);
+    border-bottom:none;
+    border-radius:10px 10px 0 0;
+    padding:.55rem .8rem;
+    display:flex;
+    align-items:center;
+    gap:.5rem;
+    font-size:.68rem;
+    color:var(--dim);
+    letter-spacing:.06em;
+  }
+  .dot{width:9px;height:9px;border-radius:50%;display:inline-block}
+  .dot.r{background:#ff5f57}
+  .dot.y{background:#febc2e}
+  .dot.gn{background:#28c840}
+  .termbar .path{margin-left:.4rem; opacity:.7; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;}
+
+  .panel{
+    width:100%;
+    border:1px solid var(--border);
+    border-radius:0 0 12px 12px;
+    background:linear-gradient(180deg, var(--panel), var(--bg2));
+    padding:1.7rem 1.5rem 1.6rem;
+    box-shadow:
+      0 0 0 1px rgba(0,255,157,.04),
+      0 20px 60px -20px rgba(0,255,157,.12),
+      inset 0 1px 0 rgba(255,255,255,.03);
+    position:relative;
+  }
+
+  .boot{
+    font-size:.72rem;
+    line-height:1.65;
+    color:var(--g-dim);
+    margin-bottom:1.1rem;
+    min-height:6.5em;
+  }
+  .boot .ok{color:var(--g)}
+  .boot .warn{color:var(--amber)}
+  .boot .cur{display:inline-block;width:.5em;background:var(--g);animation:blink 1s steps(1) infinite;margin-left:.1em}
+  @keyframes blink{50%{opacity:0}}
+
+  .lock-icon{font-size:1.9rem;text-align:center;margin-bottom:.4rem;filter:drop-shadow(0 0 10px rgba(0,255,157,.5))}
+  h1{font-family:Orbitron,sans-serif;font-size:1.02rem;font-weight:900;letter-spacing:.06em;text-align:center;color:var(--g);text-shadow:0 0 14px rgba(0,255,157,.55);margin-bottom:.35rem}
+  .sub{text-align:center;font-size:.7rem;color:var(--dim);margin-bottom:1.5rem;letter-spacing:.04em}
+
+  label{display:block;font-size:.62rem;color:var(--dim);letter-spacing:.14em;margin-bottom:.35rem;margin-top:1rem;font-weight:700}
+  .field{position:relative}
+  input{
+    width:100%;
+    background:#070a0e;
+    border:1px solid var(--border);
+    border-radius:7px;
+    padding:.7rem .8rem;
+    color:var(--text);
+    font-family:'JetBrains Mono',monospace;
+    font-size:.86rem;
+    outline:none;
+    transition:border-color .15s, box-shadow .15s;
+  }
+  input::placeholder{color:rgba(214,232,222,.25)}
+  input:focus{border-color:var(--g); box-shadow:0 0 0 3px rgba(0,255,157,.08)}
+  .hint{font-size:.64rem;color:var(--dim);margin-top:.5rem;opacity:.75;line-height:1.5}
+
+  button{
+    width:100%;
+    margin-top:1.5rem;
+    background:linear-gradient(180deg, rgba(0,255,157,.16), rgba(0,255,157,.07));
+    border:1px solid var(--g);
+    color:var(--g);
+    border-radius:7px;
+    padding:.75rem;
+    font-family:'JetBrains Mono',monospace;
+    font-weight:700;
+    font-size:.84rem;
+    letter-spacing:.1em;
+    cursor:pointer;
+    transition:.15s;
+    position:relative;
+  }
+  button:hover{background:rgba(0,255,157,.24); box-shadow:0 0 24px rgba(0,255,157,.18)}
+  button:active{transform:translateY(1px)}
+  button:disabled{cursor:default}
+
+  .crypto-row{
+    margin-top:.9rem;
+    font-size:.6rem;
+    color:var(--g-dim);
+    display:flex;
+    align-items:center;
+    gap:.4rem;
+    letter-spacing:.05em;
+    opacity:0;
+    height:0;
+    overflow:hidden;
+    transition:opacity .2s;
+  }
+  .crypto-row.show{opacity:1; height:auto; margin-bottom:.2rem}
+  .crypto-bar{flex:1; height:3px; background:rgba(0,255,157,.12); border-radius:2px; overflow:hidden}
+  .crypto-bar i{display:block; height:100%; width:0%; background:var(--g); box-shadow:0 0 6px var(--g)}
+
+  .msg{margin-top:1.1rem;font-size:.76rem;text-align:center;line-height:1.65;display:none}
+  .msg.denied{color:var(--red);display:block}
+  .msg.success{color:var(--g);display:block}
+  .gate{text-align:center;font-size:.8rem;color:var(--dim);line-height:1.85}
+  .gate a{color:var(--cyan)}
+
+  .shake{animation:shake .35s}
+  @keyframes shake{10%,90%{transform:translateX(-2px)}20%,80%{transform:translateX(5px)}30%,50%,70%{transform:translateX(-9px)}40%,60%{transform:translateX(9px)}}
+
+  .flag-box{
+    margin-top:1rem;
+    padding:.7rem .85rem;
+    border:1px dashed rgba(0,255,157,.4);
+    border-radius:7px;
+    font-size:.78rem;
+    color:var(--g);
+    text-align:center;
+    word-break:break-all;
+    background:rgba(0,255,157,.04);
+  }
+  .back{display:block;text-align:center;margin-top:1.3rem;font-size:.7rem;color:var(--dim)}
+  .back a{color:var(--cyan);text-decoration:none}
+  .back a:hover{text-decoration:underline}
+
+  @media (prefers-reduced-motion: reduce){
+    body::after{animation:none}
+    .boot .cur{animation:none}
+  }
+</style>
+</head>
+<body>
+  <div class="stage">
+    <div class="termbar">
+      <span class="dot r"></span><span class="dot y"></span><span class="dot gn"></span>
+      <span class="path">root@mainframe:~/admin#</span>
+    </div>
+    <div class="panel" id="panel"></div>
+    <div class="back"><a href="index.html">&larr; return to iamunknown77.dev</a></div>
+  </div>
+
+  <script>
+    const panel = document.getElementById('panel');
+    const unlocked = (function () {
+      try {
+        if (sessionStorage.getItem('ctf_unlocked') === 'true') return true;
+      } catch (e) {}
+      try {
+        const solved = JSON.parse(localStorage.getItem('ptf_solved') || '[false,false,false,false]');
+        return solved[3] === true;
+      } catch (e) {
+        return false;
+      }
+    })();
+
+    if (!unlocked) {
+      panel.innerHTML = `
+        <div style="font-family:'JetBrains Mono',monospace;font-size:.7rem;color:var(--dim);letter-spacing:.04em;margin-bottom:1rem;line-height:1.7;border-bottom:1px solid var(--border);padding-bottom:.9rem">
+          HTTP/1.1 <span style="color:var(--red);font-weight:700">403 Forbidden</span><br>
+          Server: mainframe-gateway<br>
+          X-Required-Step: idor-recon<br>
+          Content-Type: text/plain
+        </div>
+        <div class="lock-icon"><i class="fas fa-lock"></i></div>
+        <h1 style="color:var(--red);text-shadow:0 0 14px rgba(255,59,92,.5)">403 — ACCESS FORBIDDEN</h1>
+        <div class="gate">
+          You haven't completed the access-control challenge for this resource.<br><br>
+          <a href="index.html#portfolio-ctf">&larr; go solve the IDOR challenge</a>
+        </div>`;
+    } else {
+      panel.innerHTML = `
+        <div style="font-family:'JetBrains Mono',monospace;font-size:.7rem;color:var(--dim);letter-spacing:.04em;margin-bottom:1rem;line-height:1.7;border-bottom:1px solid var(--border);padding-bottom:.9rem">
+          HTTP/1.1 <span style="color:var(--g);font-weight:700">200 OK</span><br>
+          Server: mainframe-gateway<br>
+          X-Required-Step: idor-recon <span style="color:var(--g)">(satisfied)</span><br>
+          Content-Type: text/html
+        </div>
+        <div class="boot" id="boot"></div>
+        <div class="lock-icon"><i class="fas fa-shield-halved"></i></div>
+        <h1>MAINFRAME // ADMIN CONSOLE</h1>
+        <div class="sub">root access detected — authenticate to proceed</div>
+
+        <label>USERNAME</label>
+        <div class="field"><input id="user" placeholder="admin" autocomplete="off" spellcheck="false"></div>
+
+        <label>PASSWORD</label>
+        <div class="field"><input id="pass" type="password" placeholder="••••••••" autocomplete="off"></div>
+        <div class="hint">hint: the vault uses world-class, military-grade, unbreakable encryption. it is also, somehow, still "password".</div>
+
+        <button id="loginBtn"><i class="fas fa-bolt"></i> AUTHENTICATE</button>
+        <div class="crypto-row" id="cryptoRow">
+          <span id="cryptoLabel">ENCRYPTING</span>
+          <span class="crypto-bar"><i id="cryptoBar"></i></span>
+        </div>
+        <div class="msg" id="msg"></div>
+      `;
+
+      const bootEl = document.getElementById('boot');
+      const lines = [
+        ['$ ', 'init secure_shell --target=mainframe'],
+        ['ok ', 'kernel handshake complete'],
+        ['ok ', 'tls tunnel established'],
+        ['warn ', 'default credentials still enabled']
+      ];
+      let li = 0, ci = 0;
+      function typeBoot(){
+        if (li >= lines.length){ bootEl.innerHTML += '<span class="cur">&nbsp;</span>'; return; }
+        const [tag, text] = lines[li];
+        const cls = tag.trim()==='ok' ? 'ok' : (tag.trim()==='warn' ? 'warn' : '');
+        if (ci === 0){
+          bootEl.innerHTML += `<div><span class="${cls}">${tag}</span><span class="ln${li}"></span></div>`;
+        }
+        const lineSpan = bootEl.querySelector('.ln'+li);
+        if (ci <= text.length){
+          lineSpan.textContent = text.slice(0, ci);
+          ci++;
+          setTimeout(typeBoot, 10 + Math.random()*18);
+        } else {
+          li++; ci = 0;
+          setTimeout(typeBoot, 120);
+        }
+      }
+      typeBoot();
+
+      const userEl = document.getElementById('user');
+      const passEl = document.getElementById('pass');
+      const msgEl = document.getElementById('msg');
+      const btn = document.getElementById('loginBtn');
+      const cryptoRow = document.getElementById('cryptoRow');
+      const cryptoBar = document.getElementById('cryptoBar');
+      const cryptoLabel = document.getElementById('cryptoLabel');
+
+      function attempt() {
+        const u = userEl.value.trim();
+        const p = passEl.value.trim();
+
+        btn.disabled = true;
+        cryptoRow.classList.add('show');
+        cryptoLabel.textContent = 'VERIFYING';
+        cryptoBar.style.transition = 'width .9s ease';
+        cryptoBar.style.width = '100%';
+
+        fetch('/api/admin-login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ username: u, password: p })
+        })
+          .then(r => r.json())
+          .catch(() => ({ success: false, flag: null }))
+          .then(result => {
+            btn.disabled = false;
+            cryptoBar.style.transition = 'none';
+            cryptoBar.style.width = '0%';
+            cryptoRow.classList.remove('show');
+
+            if (result && result.success) {
+              msgEl.className = 'msg success';
+              msgEl.innerHTML = `
+                ACCESS GRANTED.<br>
+                Good to see you again. Good job, script kid.
+                <div class="flag-box">${result.flag || ''}</div>
+              `;
+              btn.disabled = true;
+              btn.style.opacity = '.4';
+              userEl.disabled = true;
+              passEl.disabled = true;
+            } else {
+              msgEl.className = 'msg denied';
+              msgEl.textContent = 'ACCESS DENIED. Try a default credential pair.';
+              panel.classList.add('shake');
+              setTimeout(() => panel.classList.remove('shake'), 350);
+            }
+          });
+      }
+
+      btn.addEventListener('click', attempt);
+      [userEl, passEl].forEach(el => el.addEventListener('keydown', e => {
+        if (e.key === 'Enter') attempt();
+      }));
+    }
+  </script>
+</body>
+</html>

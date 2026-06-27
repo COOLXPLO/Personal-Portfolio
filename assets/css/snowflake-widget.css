@@ -1,0 +1,120 @@
+/* Snowflake Network dashboard — kept as its own unobfuscated file on purpose, same
+   pattern as gh-activity.css. Uses the existing theme variables so it follows the
+   site's light/dark theme automatically. */
+
+.sfw-topbar{display:flex;align-items:center;gap:1rem;flex-wrap:wrap;margin-bottom:1.5rem}
+.sfw-badge{display:inline-flex;align-items:center;gap:.45rem;font-family:'Share Tech Mono',monospace;font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;color:var(--g);border:1px solid rgba(34,197,94,.35);background:rgba(34,197,94,.07);border-radius:20px;padding:.35rem .8rem}
+.sfw-badge-dot{width:6px;height:6px;border-radius:50%;background:currentColor;animation:2s infinite sfwPulse}
+@keyframes sfwPulse{0%,100%{opacity:1}50%{opacity:.35}}
+.sfw-updated{font-family:'Share Tech Mono',monospace;font-size:.7rem;color:var(--dim)}
+.sfw-refresh-btn{margin-left:auto;display:flex;align-items:center;gap:.45rem;font-family:'Share Tech Mono',monospace;font-size:.68rem;letter-spacing:.1em;border-radius:8px;border:1px solid var(--border);background:transparent;color:var(--dim);cursor:pointer;padding:.5rem .9rem;transition:color .2s,border-color .2s}
+.sfw-refresh-btn:hover{color:var(--g);border-color:rgba(34,197,94,.4)}
+.sfw-refresh-btn.sfw-spinning i{animation:1s linear infinite sfwSpin}
+@keyframes sfwSpin{to{transform:rotate(360deg)}}
+
+.sfw-panel{position:relative;background:var(--bg3);border:1px solid var(--border);border-radius:14px;padding:1.5rem;margin-top:2rem;overflow:hidden}
+.sfw-panel-label{font-family:'Share Tech Mono',monospace;font-size:.7rem;letter-spacing:.12em;color:var(--dim);text-transform:uppercase;margin-bottom:1.1rem}
+.sfw-panel-label i{color:var(--g);margin-right:.4rem}
+
+.sfw-map{position:relative;height:320px;border-radius:10px;background:var(--bg2);overflow:hidden}
+.sfw-map-bg{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;padding:14px;opacity:.55;pointer-events:none;box-sizing:border-box}
+.sfw-map-bg.sfw-map-bg-light{display:none}
+body.light-theme .sfw-map-bg.sfw-map-bg-dark{display:none}
+body.light-theme .sfw-map-bg.sfw-map-bg-light{display:block;opacity:.45}
+.sfw-map::after{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 40%,rgba(34,197,94,.06),transparent 72%);pointer-events:none}
+.sfw-map-dot{position:absolute;transform:translate(-50%,-50%)}
+.sfw-md-pulse{display:block;width:10px;height:10px;border-radius:50%;background:var(--g);box-shadow:0 0 0 0 rgba(34,197,94,.6);animation:2.4s infinite sfwMapPing}
+@keyframes sfwMapPing{0%{box-shadow:0 0 0 0 rgba(34,197,94,.55)}70%{box-shadow:0 0 0 14px rgba(34,197,94,0)}100%{box-shadow:0 0 0 0 rgba(34,197,94,0)}}
+.sfw-md-tag{position:absolute;top:14px;left:50%;transform:translateX(-50%);white-space:nowrap;background:var(--bg2);border:1px solid var(--border);border-radius:6px;padding:.3rem .55rem;font-family:'Share Tech Mono',monospace;font-size:.62rem;color:var(--dim);text-align:center;line-height:1.5;box-shadow:0 2px 8px rgba(0,0,0,.25)}
+.sfw-md-tag b{display:block;color:var(--g);font-size:.72rem}
+
+.sfw-legend{display:none}
+@media (max-width:760px){
+  .sfw-map{height:200px}
+  .sfw-md-tag{display:none}
+  .sfw-md-pulse{width:8px;height:8px}
+  .sfw-legend{display:grid;grid-template-columns:1fr 1fr;gap:.6rem;margin-top:1.1rem}
+  .sfw-legend-item{display:flex;align-items:center;gap:.5rem;background:rgba(34,197,94,.05);border:1px solid var(--border);border-radius:8px;padding:.55rem .7rem;font-family:'Share Tech Mono',monospace;font-size:.68rem;color:var(--dim);white-space:nowrap;overflow:hidden}
+  .sfw-legend-item b{margin-left:auto;color:var(--g);font-size:.74rem;flex-shrink:0}
+  .sfw-legend-dot{width:6px;height:6px;border-radius:50%;background:var(--g);flex-shrink:0}
+}
+@media (max-width:420px){.sfw-legend{grid-template-columns:1fr}}
+
+.sfw-stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-top:1.5rem}
+@media (max-width:900px){.sfw-stats-grid{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:480px){.sfw-stats-grid{grid-template-columns:1fr}}
+.sfw-stat-card{background:var(--bg3);border:1px solid var(--border);border-radius:14px;padding:1.3rem}
+.sfw-sc-icon{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;margin-bottom:.7rem;font-size:.85rem}
+.sfw-sc-green{background:rgba(34,197,94,.12);color:var(--g)}
+.sfw-sc-blue{background:rgba(56,189,248,.12);color:#38bdf8}
+.sfw-sc-amber{background:rgba(245,158,11,.12);color:#f59e0b}
+.sfw-sc-gray{background:rgba(148,163,184,.12);color:#94a3b8}
+.sfw-sc-num{font-family:Orbitron,sans-serif;font-weight:900;font-size:1.9rem;color:var(--text);letter-spacing:-.02em}
+.sfw-sc-spark{display:block;width:100%;height:28px;margin:.5rem 0 .3rem}
+.sfw-sc-label{font-family:'Share Tech Mono',monospace;font-size:.65rem;letter-spacing:.1em;color:var(--dim);text-transform:uppercase}
+.sfw-sc-sub{font-size:.72rem;color:rgba(226,232,240,.35);margin-top:.15rem}
+
+.sfw-trend-card{background:var(--bg3);border:1px solid var(--border);border-radius:14px;padding:1.5rem;margin-top:1.5rem}
+.sfw-trend-head{display:flex;align-items:center;justify-content:space-between;font-family:'Share Tech Mono',monospace;font-size:.7rem;letter-spacing:.1em;color:var(--dim);text-transform:uppercase;margin-bottom:1rem}
+.sfw-trend-head i{color:var(--g);margin-right:.4rem}
+.sfw-chart-wrap{position:relative;height:160px}
+.sfw-chart-wrap canvas{width:100%;height:100%;display:block}
+.sfw-chart-meta{display:flex;justify-content:space-between;font-family:'Share Tech Mono',monospace;font-size:.65rem;color:rgba(226,232,240,.35);margin-top:.6rem}
+.sfw-chart-meta b{color:var(--g);display:block;font-size:.85rem;font-family:Orbitron,sans-serif}
+
+.sfw-banner{margin-top:1.5rem;display:flex;align-items:center;gap:.85rem;background:linear-gradient(90deg,rgba(34,197,94,.08),rgba(56,189,248,.05));border:1px solid var(--border);border-radius:12px;padding:1rem 1.3rem}
+.sfw-banner-dot{width:8px;height:8px;border-radius:50%;background:var(--g);box-shadow:0 0 10px var(--g);animation:2s infinite sfwPulse;flex-shrink:0}
+.sfw-banner-text{font-size:.85rem;color:var(--dim)}
+.sfw-banner-text b{color:var(--g);font-family:Orbitron,sans-serif}
+
+.sfw-radar-card{margin-top:1.5rem;background:var(--bg3);border:1px solid var(--border);border-radius:14px;padding:1.8rem;text-align:center}
+.sfw-radar-head{margin-bottom:1.2rem}
+.sfw-radar-title{font-family:Orbitron,sans-serif;font-weight:900;font-size:1.5rem;margin:.3rem 0}
+.sfw-radar-sub{font-size:.85rem;color:var(--dim)}
+
+.sfw-radar-stage{display:flex;justify-content:center;margin:1.5rem 0}
+.sfw-radar-rings{position:relative;width:220px;height:220px}
+.sfw-radar-rings span{position:absolute;border:1px solid rgba(34,197,94,.25);border-radius:50%;top:50%;left:50%;transform:translate(-50%,-50%);transition:border-color .4s,opacity .4s}
+.sfw-radar-rings span:nth-child(1){width:70px;height:70px}
+.sfw-radar-rings span:nth-child(2){width:140px;height:140px}
+.sfw-radar-rings span:nth-child(3){width:210px;height:210px}
+.sfw-radar-core{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-family:'Share Tech Mono',monospace;font-size:.65rem;letter-spacing:.1em;color:var(--dim)}
+.sfw-radar-sweep{position:absolute;top:50%;left:50%;width:50%;height:1px;transform-origin:0 0;background:linear-gradient(90deg,rgba(34,197,94,.55),transparent);opacity:0;transition:opacity .4s}
+.sfw-radar-card.sfw-on .sfw-radar-sweep{opacity:1;animation:6s linear infinite sfwRadarSpin}
+.sfw-radar-card.sfw-on .sfw-radar-rings span{border-color:rgba(34,197,94,.5);animation:3s ease-out infinite sfwRadarPing}
+.sfw-radar-card.sfw-on .sfw-radar-rings span:nth-child(2){animation-delay:.5s}
+.sfw-radar-card.sfw-on .sfw-radar-rings span:nth-child(3){animation-delay:1s}
+@keyframes sfwRadarSpin{to{transform:rotate(360deg)}}
+@keyframes sfwRadarPing{0%{opacity:.9}80%{opacity:.15}100%{opacity:.9}}
+
+.sfw-radar-status{display:flex;align-items:center;justify-content:center;gap:.5rem;font-family:'Share Tech Mono',monospace;font-size:.78rem;letter-spacing:.06em;color:var(--dim);text-transform:uppercase;margin-bottom:.6rem}
+.sfw-radar-dot{width:7px;height:7px;border-radius:50%;background:var(--dim)}
+.sfw-radar-card.sfw-on .sfw-radar-dot{background:var(--g);box-shadow:0 0 8px var(--g);animation:2s infinite sfwPulse}
+.sfw-radar-card.sfw-on .sfw-radar-status{color:var(--g)}
+.sfw-radar-desc{font-size:.82rem;color:var(--dim);max-width:480px;margin:0 auto 1.2rem;line-height:1.6}
+
+.sfw-radar-meta{display:flex;justify-content:center;gap:1.5rem;flex-wrap:wrap;font-family:'Share Tech Mono',monospace;font-size:.7rem;color:var(--dim);margin-bottom:1.4rem}
+.sfw-radar-meta i{color:var(--g);margin-right:.35rem}
+.sfw-radar-meta b{color:var(--text)}
+
+.sfw-radar-btn{display:inline-flex;align-items:center;gap:.55rem;font-family:'Share Tech Mono',monospace;font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;border-radius:30px;border:1px solid rgba(34,197,94,.4);background:rgba(34,197,94,.08);color:var(--g);padding:.7rem 1.6rem;cursor:pointer;transition:background .2s,border-color .2s}
+.sfw-radar-btn:hover{background:rgba(34,197,94,.15)}
+.sfw-radar-card.sfw-on .sfw-radar-btn{border-color:rgba(248,113,113,.4);background:rgba(248,113,113,.08);color:#f87171}
+.sfw-radar-card.sfw-on .sfw-radar-btn:hover{background:rgba(248,113,113,.15)}
+
+.sfw-radar-note{font-size:.72rem;color:rgba(226,232,240,.35);max-width:480px;margin:1.2rem auto 0;line-height:1.6}
+.sfw-activate-iframe-mount{display:flex;justify-content:center;margin-top:1.3rem}
+.sfw-activate-iframe-mount iframe{border:0;border-radius:10px;background:#000;width:320px;max-width:100%;height:240px}
+
+.sfw-feature-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-top:1.2rem}
+@media (max-width:900px){.sfw-feature-grid{grid-template-columns:1fr}}
+.sfw-feature-card{background:var(--bg3);border:1px solid var(--border);border-radius:14px;padding:1.4rem}
+.sfw-feature-icon{width:34px;height:34px;border-radius:9px;display:flex;align-items:center;justify-content:center;margin-bottom:.8rem;font-size:.8rem}
+.sfw-card-title{font-family:'Share Tech Mono',monospace;font-size:.68rem;letter-spacing:.16em;color:var(--dim);text-transform:uppercase;margin-bottom:.6rem}
+.sfw-proxy-caption{font-size:.82rem;line-height:1.6;color:var(--dim)}
+.sfw-link{display:inline-flex;align-items:center;gap:.35rem;font-family:'Share Tech Mono',monospace;font-size:.7rem;color:var(--g);text-decoration:none;border-bottom:1px solid rgba(34,197,94,.3);padding-bottom:2px}
+.sfw-link:hover{border-bottom-color:var(--g)}
+
+body.light-theme .sfw-panel,body.light-theme .sfw-stat-card,body.light-theme .sfw-trend-card,body.light-theme .sfw-banner,body.light-theme .sfw-radar-card,body.light-theme .sfw-feature-card{background:#fff;box-shadow:0 2px 10px rgba(15,23,42,.05)}
+body.light-theme .sfw-map-tag,body.light-theme .sfw-md-tag,body.light-theme .sfw-legend-item{background:rgba(255,255,255,.92);color:#374151}
+body.light-theme .sfw-proxy-caption,body.light-theme .sfw-sc-sub,body.light-theme .sfw-updated,body.light-theme .sfw-chart-meta,body.light-theme .sfw-banner-text,body.light-theme .sfw-radar-sub,body.light-theme .sfw-radar-desc{color:#6b7280}

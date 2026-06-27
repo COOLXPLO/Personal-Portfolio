@@ -1,0 +1,93 @@
+/* GitHub Activity & Contributions — added section, kept separate from the protected build.
+   Re-themed to look like an actual Kali Linux terminal window (dark navy/black, signature
+   Kali blue prompt, traffic-light window chrome) instead of the previous generic slate panel. */
+
+.gh-feed-wrap,.gh-cal-wrap{
+  --kali-bg:#0a0d12;
+  --kali-bg2:#0e1218;
+  --kali-blue:#2ea043;
+  --kali-blue-dim:rgba(46,160,67,.18);
+  --kali-cyan:#39d353;
+  --kali-fg:#e7e9ee;
+  --kali-dim:rgba(231,233,238,.45);
+  --kali-border:rgba(46,160,67,.28);
+  border:1px solid var(--kali-border);
+  border-radius:10px;
+  overflow:hidden;
+  box-shadow:0 0 24px rgba(46,160,67,.06);
+}
+.gh-feed-wrap{background:var(--kali-bg);font-family:'Share Tech Mono',monospace}
+
+.gh-feed-header{display:flex;align-items:center;gap:.75rem;flex-wrap:wrap;padding:.7rem 1.1rem;background:var(--kali-bg2);border-bottom:1px solid var(--kali-border)}
+.gh-term-dots{display:flex;gap:.4rem;flex-shrink:0}
+.gh-dot{width:10px;height:10px;border-radius:50%;display:inline-block}
+.gh-dot.red{background:#ff5f56}
+.gh-dot.yel{background:#ffbd2e}
+.gh-dot.grn{background:#27c93f}
+.gh-term-title{flex:1;min-width:120px;color:var(--kali-dim);font-size:.7rem;letter-spacing:.03em}
+.gh-feed-header .live-badge{color:var(--kali-blue)}
+.gh-refresh-btn{display:flex;align-items:center;gap:.35rem;background:var(--kali-blue-dim);border:1px solid rgba(46,160,67,.4);color:var(--kali-blue);font-family:'Share Tech Mono',monospace;font-size:.62rem;letter-spacing:.06em;padding:.32rem .7rem;border-radius:6px;cursor:pointer;transition:background .2s}
+.gh-refresh-btn:hover{background:rgba(46,160,67,.3)}
+
+.gh-feed-cmdline{padding:.7rem 1.2rem;font-family:'Share Tech Mono',monospace;font-size:.72rem;border-bottom:1px solid rgba(46,160,67,.12);line-height:1.5}
+.gh-prompt-line{display:block;color:var(--kali-fg)}
+.gh-prompt-bracket{color:var(--kali-blue);font-weight:700}
+.gh-prompt-user,.gh-prompt-host{color:var(--kali-blue);font-weight:700}
+.gh-prompt-at{color:var(--kali-cyan)}
+.gh-feed-count{display:block;margin-top:.3rem;color:var(--kali-cyan);font-size:.65rem;letter-spacing:.05em}
+
+.gh-feed-body{padding:.3rem 1.2rem .8rem;min-height:240px;max-height:380px;overflow-y:auto;font-family:'Share Tech Mono',monospace;font-size:.72rem}
+.gh-feed-loading,.gh-feed-empty,.gh-feed-error{color:var(--kali-dim);padding:1rem 0;font-size:.75rem}
+.gh-feed-error a{color:var(--kali-blue)}
+.gh-feed-row{display:flex;align-items:center;gap:.6rem;padding:.5rem 0;border-bottom:1px solid rgba(46,160,67,.08);flex-wrap:wrap;opacity:0;transform:translateY(-4px);animation:ghRowIn .35s ease forwards}
+.gh-feed-row:last-child{border-bottom:none}
+@keyframes ghRowIn{to{opacity:1;transform:translateY(0)}}
+.gh-feed-time{color:var(--kali-dim);min-width:48px;font-size:.66rem;flex-shrink:0}
+.gh-badge{font-size:.58rem;font-weight:700;letter-spacing:.05em;padding:.16rem .45rem;border-radius:4px;flex-shrink:0}
+.gh-badge-push{background:rgba(46,160,67,.15);color:var(--kali-blue);border:1px solid rgba(46,160,67,.4)}
+.gh-badge-create{background:rgba(57,211,83,.15);color:var(--kali-cyan);border:1px solid rgba(57,211,83,.4)}
+.gh-badge-pr{background:rgba(168,124,255,.15);color:#a87cff;border:1px solid rgba(168,124,255,.4)}
+.gh-badge-issue{background:rgba(245,158,11,.15);color:#f59e0b;border:1px solid rgba(245,158,11,.4)}
+.gh-badge-comment{background:rgba(148,163,184,.15);color:#94a3b8;border:1px solid rgba(148,163,184,.35)}
+.gh-badge-star{background:rgba(251,191,36,.15);color:#fbbf24;border:1px solid rgba(251,191,36,.4)}
+.gh-badge-fork{background:rgba(57,211,83,.15);color:var(--kali-cyan);border:1px solid rgba(57,211,83,.4)}
+.gh-badge-delete{background:rgba(239,68,68,.15);color:#ef4444;border:1px solid rgba(239,68,68,.4)}
+.gh-badge-release{background:rgba(168,124,255,.15);color:#a87cff;border:1px solid rgba(168,124,255,.4)}
+.gh-badge-other{background:rgba(148,163,184,.12);color:#94a3b8;border:1px solid rgba(148,163,184,.3)}
+.gh-feed-text{color:rgba(231,233,238,.75);font-size:.7rem}
+.gh-feed-repo{margin-left:auto;color:var(--kali-blue);text-decoration:none;font-size:.7rem;white-space:nowrap}
+.gh-feed-repo:hover{text-decoration:underline;color:var(--kali-cyan)}
+
+.gh-cal-wrap{background:var(--kali-bg);padding:1.4rem 1.5rem}
+.gh-cal-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.2rem;flex-wrap:wrap;gap:.75rem}
+.gh-cal-total{font-family:Orbitron,sans-serif;font-size:1rem;font-weight:700;color:var(--kali-fg)}
+.gh-year-toggle{display:flex;gap:.35rem;background:rgba(46,160,67,.08);padding:.25rem;border-radius:8px}
+.gh-year-btn{background:transparent;border:none;color:var(--kali-dim);font-family:'Share Tech Mono',monospace;font-size:.72rem;letter-spacing:.05em;padding:.35rem .9rem;border-radius:6px;cursor:pointer;transition:background .2s,color .2s}
+.gh-year-btn.active{background:rgba(46,160,67,.25);color:var(--kali-blue)}
+.gh-cal-grid-wrap{overflow-x:auto;padding-bottom:.3rem}
+.gh-cal-inner{display:inline-block;min-width:100%}
+.gh-cal-months{display:flex;margin-left:28px}
+.gh-cal-month-label{width:13px;flex-shrink:0;font-family:'Share Tech Mono',monospace;font-size:.6rem;color:var(--kali-dim);white-space:nowrap}
+.gh-cal-body{display:flex}
+.gh-cal-weekdays{display:flex;flex-direction:column;gap:2px;margin-right:6px;width:22px}
+.gh-cal-weekday-label{height:11px;font-family:'Share Tech Mono',monospace;font-size:.55rem;color:var(--kali-dim);line-height:11px}
+.gh-cal-weeks{display:flex;gap:2px}
+.gh-cal-week{display:flex;flex-direction:column;gap:2px}
+.gh-cal-cell{width:11px;height:11px;border-radius:2px;background:rgba(46,160,67,.08)}
+.gh-cal-cell-empty{background:transparent}
+.gh-cal-cell[data-level="1"]{background:rgba(46,160,67,.32)}
+.gh-cal-cell[data-level="2"]{background:rgba(46,160,67,.55)}
+.gh-cal-cell[data-level="3"]{background:rgba(57,211,83,.75)}
+.gh-cal-cell[data-level="4"]{background:#39d353}
+.gh-cal-legend{display:flex;align-items:center;gap:.35rem;margin-top:1rem;font-family:'Share Tech Mono',monospace;font-size:.6rem;color:var(--kali-dim);flex-wrap:wrap}
+.gh-cal-legend .gh-cal-cell{width:9px;height:9px}
+.gh-cal-link{margin-left:auto;color:var(--kali-blue);text-decoration:none}
+.gh-cal-link:hover{text-decoration:underline;color:var(--kali-cyan)}
+.gh-cal-loading,.gh-cal-empty,.gh-cal-error{color:var(--kali-dim);font-size:.75rem;padding:1.5rem 0;text-align:center}
+.gh-cal-error a{color:var(--kali-blue)}
+
+@media (max-width:640px){
+  .gh-feed-repo{margin-left:0;width:100%}
+  .gh-cal-wrap{padding:1.1rem 1rem}
+  .gh-term-title{font-size:.62rem}
+}
