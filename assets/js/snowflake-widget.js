@@ -296,10 +296,35 @@
     btn.addEventListener('click', function () { on ? turnOff() : turnOn(); });
   }
 
+  function initMapDots() {
+    var dots = document.querySelectorAll('.sfw-map-dot');
+    if (!dots.length) return;
+    function closeAll(except) {
+      dots.forEach(function (d) { if (d !== except) d.classList.remove('sfw-md-active'); });
+    }
+    dots.forEach(function (dot) {
+      dot.addEventListener('click', function (e) {
+        e.stopPropagation();
+        var wasActive = dot.classList.contains('sfw-md-active');
+        closeAll(dot);
+        dot.classList.toggle('sfw-md-active', !wasActive);
+      });
+      dot.addEventListener('keydown', function (e) {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          dot.click();
+        }
+        if (e.key === 'Escape') { dot.classList.remove('sfw-md-active'); dot.blur(); }
+      });
+    });
+    document.addEventListener('click', function () { closeAll(null); });
+  }
+
   function init() {
     render(model); // instant, always-good baseline — nothing ever looks blank/broken
     tryLiveUpdate(function () {}); // silent best-effort upgrade
     initRadar();
+    initMapDots();
 
     var btn = document.getElementById('sfwRefreshBtn');
     if (btn) btn.addEventListener('click', function () {
