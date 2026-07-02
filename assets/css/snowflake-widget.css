@@ -122,6 +122,11 @@ body.light-theme .sfw-map-bg.sfw-map-bg-light{display:block;opacity:.45}
 .sfw-link{display:inline-flex;align-items:center;gap:.35rem;font-family:'Share Tech Mono',monospace;font-size:.7rem;color:var(--g);text-decoration:none;border-bottom:1px solid rgba(34,197,94,.3);padding-bottom:2px}
 .sfw-link:hover{border-bottom-color:var(--g)}
 
+.sfw-section-top-wrap{display:flex;justify-content:center;margin-top:2rem}
+.sfw-section-top-btn{display:inline-flex;align-items:center;gap:.55rem;font-family:'Share Tech Mono',monospace;font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;border-radius:30px;border:1px solid rgba(34,197,94,.35);background:rgba(34,197,94,.06);color:var(--g);padding:.65rem 1.5rem;cursor:pointer;transition:background .2s,border-color .2s,transform .2s}
+.sfw-section-top-btn:hover{background:rgba(34,197,94,.15);border-color:rgba(34,197,94,.55);transform:translateY(-2px)}
+.sfw-section-top-btn i{font-size:.7rem}
+
 body.light-theme .sfw-panel,body.light-theme .sfw-stat-card,body.light-theme .sfw-trend-card,body.light-theme .sfw-banner,body.light-theme .sfw-radar-card,body.light-theme .sfw-feature-card{background:#fff;box-shadow:0 2px 10px rgba(15,23,42,.05)}
 body.light-theme .sfw-map-tag,body.light-theme .sfw-md-tag,body.light-theme .sfw-legend-item{background:rgba(255,255,255,.92);color:#374151}
 body.light-theme .sfw-proxy-caption,body.light-theme .sfw-sc-sub,body.light-theme .sfw-updated,body.light-theme .sfw-chart-meta,body.light-theme .sfw-banner-text,body.light-theme .sfw-radar-sub,body.light-theme .sfw-radar-desc{color:#6b7280}
