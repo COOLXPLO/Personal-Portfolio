@@ -1,0 +1,9 @@
+/* Auto-hiding nav: slides the nav bar (and the ticker strip riding just below it)
+   up out of view when scrolling down, and brings it back on scroll-up, on hover
+   near the very top of the viewport, or whenever the mobile menu is open.
+   Kept as its own small unobfuscated file, same pattern as gh-activity.css /
+   snowflake-widget.css. */
+
+nav{transition:transform .32s cubic-bezier(.4,0,.2,1)}
+nav.nav-autohidden{transform:translateY(-100%)}
+.ticker-wrap{transition:transform .32s cubic-bezier(.4,0,.2,1)}
